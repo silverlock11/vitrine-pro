@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vitrine Pro</title>
+<style>
+body {
+  margin: 0;
+  background: #090909;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+header {
+  padding: 25px 8%;
+  border-bottom: 1px solid #444;
+  color: #f3c84b;
+  font-size: 25px;
+  font-weight: bold;
+}
+.hero {
+  text-align: center;
+  padding: 70px 20px;
+}
+h1 {
+  font-size: 44px;
+}
+h1 span { color: #f3c84b; }
+p {
+  color: #bbb;
+  line-height: 1.7;
+}
+main {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+input, select {
+  padding: 14px;
+  margin: 5px;
+  border-radius: 8px;
+  background: #222;
+  color: white;
+  border: 1px solid #555;
+}
+.card {
+  background: #191919;
+  border: 1px solid #51452b;
+  padding: 22px;
+  margin: 15px 0;
+  border-radius: 12px;
+}
+button {
+  background: #f3c84b;
+  border: 0;
+  padding: 12px 20px;
+  border-radius: 7px;
+  font-weight: bold;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+<header>VITRINE PRO</header>
+
+<section class="hero">
+  <p>FORNECEDORES E PRODUTOS EM UM SÓ LUGAR</p>
+  <h1>Encontre o produto certo.<br>
+  <span>Venda mais.</span></h1>
+  <p>Descubra fornecedores e oportunidades para sua loja.</p>
+  <button onclick="document.getElementById('catalogo').scrollIntoView()">
+    Explorar catálogo
+  </button>
+</section>
+
+<main id="catalogo">
+  <h2>Catálogo de fornecedores</h2>
+  <input id="busca" placeholder="Buscar fornecedor...">
+  <select id="categoria">
+    <option value="">Todas as categorias</option>
+    <option>Moda</option>
+    <option>Eletrônicos</option>
+    <option>Casa</option>
+    <option>Beleza</option>
+  </select>
+  <div id="lista"></div>
+  <p>Catálogo demonstrativo. Os fornecedores de exemplo ainda não são reais.</p>
+</main>
+
+<script>
+const dados = [
+  {nome:"Fornecedor Exemplo 1", categoria:"Moda",
+   descricao:"Exemplo de roupas e acessórios."},
+  {nome:"Fornecedor Exemplo 2", categoria:"Eletrônicos",
+   descricao:"Exemplo de acessórios eletrônicos."},
+  {nome:"Fornecedor Exemplo 3", categoria:"Casa",
+   descricao:"Exemplo de produtos para casa."},
+  {nome:"Fornecedor Exemplo 4", categoria:"Beleza",
+   descricao:"Exemplo de produtos de beleza."}
+];
+
+function mostrar() {
+  const busca = document.getElementById("busca").value.toLowerCase();
+  const cat = document.getElementById("categoria").value;
+  const filtrados = dados.filter(x =>
+    (x.nome + " " + x.categoria + " " + x.descricao)
+      .toLowerCase().includes(busca) &&
+    (!cat || x.categoria === cat)
+  );
+  document.getElementById("lista").innerHTML = filtrados.map(x =>
+    `<div class="card">
+      <p>${x.categoria}</p>
+      <h3>${x.nome}</h3>
+      <p>${x.descricao}</p>
+    </div>`
+  ).join("") || "<p>Nenhum resultado encontrado.</p>";
+}
+document.getElementById("busca").addEventListener("input", mostrar);
+document.getElementById("categoria").addEventListener("change", mostrar);
+mostrar();
+</script>
+</body>
+</html>
